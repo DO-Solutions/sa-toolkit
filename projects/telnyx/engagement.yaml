@@ -1,0 +1,13 @@
+customer: Telnyx
+slug: telnyx
+sa: Diogo Vieira
+stage: technical-validation
+fit_score: null
+products:
+  - Self-managed Kubernetes (Rancher)
+  - Managed Load Balancers
+created: 2026-04-06
+last_updated: 2026-04-06
+ae: Michaela
+tam: Raph
+notes: "Testing WireGuard LB solution at scale on self-managed Kubernetes with Rancher"

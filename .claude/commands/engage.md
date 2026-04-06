@@ -59,13 +59,15 @@ Git branch created: `customer/acme-corp`
 2. Derive the slug: lowercase, spaces → hyphens, strip special chars.
 3. Use `git config user.name` to populate the `sa` field.
 4. Use today's date for `created` and `last_updated`.
-5. Run these shell commands:
+5. Run these shell commands automatically:
    ```bash
    mkdir -p projects/[slug]/deliverables
    mkdir -p projects/[slug]/raw
    # write engagement.yaml
    git checkout -b customer/[slug]
-   git add projects/[slug]/engagement.yaml projects/[slug]/deliverables/ projects/[slug]/raw/
+   git add projects/[slug]/engagement.yaml
+   git commit -m "engage: [slug] — [one-line context]"
+   git push -u origin customer/[slug]
    ```
 6. After creating, output a summary:
    ```

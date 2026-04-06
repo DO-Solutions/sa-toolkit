@@ -1,12 +1,17 @@
 customer: Arvore
 slug: arvore
 sa: Diogo Vieira
-stage: qualifying
-fit_score: null
+stage: closed-lost
+fit_score: 61
 products:
   - droplets
-  - managed-db
+  - doks
+  - managed-postgresql
+  - managed-mysql
+  - spaces
+  - spaces-cdn
+  - container-registry
 created: 2026-04-06
-last_updated: 2026-04-06
+last_updated: 2026-04-06  # closed-lost: customer received discounts from incumbent
 ae: null
 notes: "Compare costs between AWS and DO and possible migration plan"

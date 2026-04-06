@@ -55,51 +55,32 @@ Git branch created: `customer/acme-corp`
 
 ## Instructions for Claude
 
-1. Walk through each field one at a time as a wizard. Ask only one question per message. Wait for the answer before asking the next.
+1. Start by asking for stage only, using a numbered selection list:
 
-   **Step 1 — Stage** (numbered selection):
    ```
    New engagement — let's get the details.
 
-   What stage are we at?
+   First, what stage are we at?
 
    1. Qualifying — early discovery, evaluating fit
    2. POC — building or running a proof of concept
    3. Technical Validation — validating a specific architecture or feature
    ```
 
-   **Step 2 — Customer name** (after stage confirmed):
-   ```
-   Got it — [Stage].
+2. Wait for the user to select. Once stage is confirmed, ask for the remaining four fields as a group:
 
-   What's the customer name?
    ```
+   Got it — [Stage]. Now I need the specifics:
 
-   **Step 3 — AE name:**
-   ```
-   Who's the AE on this one?
-   ```
+   1. Customer name — e.g. "Acme Corp"
+   2. AE name — who handed this off?
+   3. One-line context — what problem are they solving?
+   4. Products in scope — best guess, e.g. DOKS, Managed Postgres, GPU Droplets
 
-   **Step 4 — One-line context:**
-   ```
-   One-line context — what problem are they solving?
+   Drop all four and I'll scaffold everything.
    ```
 
-   **Step 5 — Products in scope** (numbered selection + free text):
-   ```
-   Products in scope? Select all that apply or type your own.
-
-   1. DOKS (Managed Kubernetes)
-   2. Managed Databases (Postgres / MySQL / Redis / Mongo)
-   3. Droplets (Compute)
-   4. GPU Droplets
-   5. App Platform
-   6. Spaces (Object Storage)
-   7. Load Balancers
-   8. Other — I'll type it
-   ```
-
-2. Once all five are collected, scaffold the engagement:
+3. Once all four are provided, scaffold the engagement:
    - Derive the slug: lowercase, spaces → hyphens, strip special chars
    - Use `git config user.name` to populate the `sa` field
    - Use today's date for `created` and `last_updated`

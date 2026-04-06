@@ -68,6 +68,7 @@ sa-toolkit/
 | `/cost` | DO vs incumbent cost comparison | `projects/[slug]/deliverables/cost-comparison.md` |
 | `/poc-init` | POC plan + checklist + runbook | `projects/[slug]/deliverables/poc-plan.md` |
 | `/capture` | Close engagement, write to knowledge base | `knowledge/engagements/YYYY-MM-DD-[slug].md` |
+| `/validate` | Document internal product validation (no customer) | `knowledge/validations/YYYY-MM-DD-[topic].md` |
 
 ## engagement.yaml schema
 
@@ -103,7 +104,7 @@ Competitive positioning (be factual, not salesy):
 
 ## Knowledge base usage
 
-When running any command, search `knowledge/engagements/` for past engagements with similar profiles (same industry, products, or use case) and surface them. This is the compounding value of the system — past work informs current work automatically.
+When running any command, search both `knowledge/engagements/` and `knowledge/validations/` for relevant past work — same industry, products, or use case. Surface matches automatically. This is the compounding value of the system — past work informs current work regardless of whether it came from a customer engagement or an internal validation.
 
 ## Contribution loop
 

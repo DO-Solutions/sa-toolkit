@@ -63,24 +63,29 @@ Written to: `skills/[category]/[pattern-name].md`
 Claude will ask: *"Is there a pattern here worth generalizing?"*
 If yes, extract it and link it from the engagement entry.
 
-## Output: commit instructions
+## Git operations
 
-After generating all files, Claude outputs:
+After generating and writing all files, Claude runs the following automatically:
 
+```bash
+# Stage the capture output
+git add knowledge/ skills/ projects/[slug]/engagement.yaml
+
+# Commit
+git commit -m "capture: [slug] — [one-line outcome]"
+
+# Push the customer branch
+git push origin customer/[slug]
 ```
-Files created:
-  knowledge/engagements/YYYY-MM-DD-[slug].md
-  skills/[category]/[pattern].md  (if applicable)
 
-Update engagement.yaml stage to: [outcome]
+After pushing, Claude outputs:
+```
+Captured and pushed: customer/[slug]
 
-Commit:
-  git add knowledge/ skills/ projects/[slug]/engagement.yaml
-  git commit -m "capture: [slug] — [one-line outcome]"
-  git push origin customer/[slug]
-
-Then open a PR from customer/[slug] → main.
+Next: open a PR from customer/[slug] → main
 SA lead reviews and merges. Branch deleted after merge.
+
+PR URL: https://github.com/DO-Solutions/sa-toolkit/compare/customer/[slug]
 ```
 
 ## Instructions for Claude
@@ -89,3 +94,5 @@ SA lead reviews and merges. Branch deleted after merge.
 - Closed-lost captures are as valuable as wins — don't skip them
 - Keep the "For the next SA" section tight: one paragraph, actionable advice only
 - Cross-reference `knowledge/engagements/` for similar past engagements and note if this one confirms or contradicts them
+- After writing all files, run the git commands above automatically — do not just print them
+- If the push fails (e.g. auth error), print the commands for the SA to run manually

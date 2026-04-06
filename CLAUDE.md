@@ -69,6 +69,8 @@ sa-toolkit/
 | `/poc-init` | POC plan + checklist + runbook | `projects/[slug]/deliverables/poc-plan.md` |
 | `/capture` | Close engagement, write to knowledge base | `knowledge/engagements/YYYY-MM-DD-[slug].md` |
 | `/validate` | Document internal product validation (no customer) | `knowledge/validations/YYYY-MM-DD-[topic].md` |
+| `/cost-deck` | Customer-facing cost comparison spreadsheet | `projects/[slug]/deliverables/cost-comparison.xlsx` |
+| `/risk-brief` | Internal qualification risk brief (docx) | `projects/[slug]/deliverables/qualification-brief.docx` |
 
 ## engagement.yaml schema
 

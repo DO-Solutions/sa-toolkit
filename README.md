@@ -108,6 +108,8 @@ Every customer gets its own branch (`customer/[slug]`). Claude knows which engag
 | `/cost` | DO vs incumbent cost comparison | `deliverables/cost-comparison.md` |
 | `/poc-init` | POC plan, checklist, runbook | `deliverables/poc-plan.md` |
 | `/capture` | Close engagement, write to knowledge base | `knowledge/engagements/[date]-[slug].md` |
+| `/cost-deck` | Customer-facing cost comparison spreadsheet | `deliverables/cost-comparison.xlsx` |
+| `/risk-brief` | Internal qualification risk brief | `deliverables/qualification-brief.docx` |
 
 ---
 

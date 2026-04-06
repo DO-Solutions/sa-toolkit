@@ -44,6 +44,8 @@ git clone https://github.com/DO-Solutions/sa-toolkit.git ~/do/sa-toolkit
 
 ### 2. Set the `sa` alias
 
+The `sa` alias is how you open Claude inside the toolkit. It navigates to the `sa-toolkit` folder and starts Claude there — this is important because Claude needs to be running from that directory to find `CLAUDE.md` and the slash commands.
+
 Add to `~/.zshrc` or `~/.bashrc`:
 ```bash
 alias sa='cd ~/do/sa-toolkit && claude'
@@ -54,13 +56,15 @@ Reload:
 source ~/.zshrc
 ```
 
+From now on, always open the toolkit with `sa` — not by running `claude` directly from wherever you happen to be.
+
 ### 3. Verify
 
 ```bash
 sa
 ```
 
-Claude starts, loads `CLAUDE.md`, and checks the current git branch. On `main` it will tell you there's no active engagement and prompt you to run `/engage`. That's correct.
+This navigates to `~/do/sa-toolkit` and starts Claude. You should see Claude load with SA context. On `main` (no active engagement) it will prompt you to run `/engage` or switch to a customer branch. That's correct — you're ready.
 
 ---
 

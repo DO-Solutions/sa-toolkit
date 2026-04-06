@@ -55,7 +55,12 @@ Git branch created: `customer/acme-corp`
 
 ## Instructions for Claude
 
-1. Ask for all required inputs in a single prompt — not one at a time.
+1. Ask for inputs one question at a time, in order. Wait for the answer before asking the next.
+   - Start with: "What's the customer name?"
+   - Then: "Who's the AE on this one?"
+   - Then: "One-line context — what problem are they solving?"
+   - Then: "What stage are we at? (qualifying / poc / technical-validation)"
+   - Then: "Products in scope? Best guess is fine, we can update later."
 2. Derive the slug: lowercase, spaces → hyphens, strip special chars.
 3. Use `git config user.name` to populate the `sa` field.
 4. Use today's date for `created` and `last_updated`.

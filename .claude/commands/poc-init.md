@@ -1,25 +1,27 @@
 # /poc-init — POC Scaffold Generator
 
-Scaffold a POC repository with a validation checklist, architecture diagram (text), and runbook.
+Scaffold a POC plan with validation checklist, architecture overview, and runbook — written into the active engagement's deliverables.
 
 ## Usage
 ```
 /poc-init
 ```
-Provide: customer name, use case, primary products being tested, success criteria.
+Provide: use case, primary products being tested, success criteria. Claude pre-fills from qualification if available.
 
-## Output
+## Active engagement detection
 
 Claude will:
-1. Generate a `README.md` for the POC repo
-2. Create a `checklist.md` with pass/fail validation gates
-3. Draft a `runbook.md` with setup steps
-4. Suggest a directory structure
+1. Check the current git branch for `customer/[slug]`
+2. If found, load `projects/[slug]/deliverables/customer-qualification.md` for context (products, risks, fit score)
+3. Write output to `projects/[slug]/deliverables/poc-plan.md`
+4. Update `engagement.yaml`: set `stage: poc`, `last_updated`
 
-## POC README template
+If not on a customer branch, Claude will ask which project this is for.
+
+## Output: poc-plan.md
 
 ```markdown
-# POC: [Use Case] — [Customer]
+# POC Plan: [Use Case] — [Customer]
 
 **SA**: [name] | **Date**: YYYY-MM-DD | **Duration**: X weeks
 **Products**: [list]
@@ -43,51 +45,30 @@ Claude will:
 | 3 | Load testing + results |
 | 4 | Findings readout |
 
+## Runbook
+### Prerequisites
+### Environment setup
+### Validation steps
+### Teardown
+
+## Validation checklist
+- [ ] Environment setup complete
+- [ ] Baseline established
+- [ ] Load test run
+- [ ] Failover tested (if HA required)
+- [ ] Security review done
+- [ ] Results captured
+
 ## Resources
 - DO Console: https://cloud.digitalocean.com
-- Runbook: [runbook.md](./runbook.md)
-- Results: [results.md](./results.md)
-```
-
-## Checklist template
-
-```markdown
-# POC Validation Checklist: [Customer]
-
-## Environment setup
-- [ ] DO project created, team members invited
-- [ ] VPC configured with appropriate CIDR
-- [ ] SSH keys loaded
-- [ ] Firewall rules: restrict to VPN/office IPs
-
-## [Primary product] validation
-- [ ] [test 1]
-- [ ] [test 2]
-
-## Performance
-- [ ] Baseline established
-- [ ] Load test run (target: X req/s)
-- [ ] Latency p99 < X ms under load
-- [ ] No errors under sustained load
-
-## Failover (if HA required)
-- [ ] Primary node killed, standby promoted in < 30s
-- [ ] Application reconnected automatically
-- [ ] No data loss confirmed
-
-## Security
-- [ ] No public exposure of internal services
-- [ ] All credentials in environment variables or secrets manager
-- [ ] Audit log reviewed
-
-## Handoff
-- [ ] Results captured in /knowledge/engagements/
-- [ ] Cost comparison updated with actuals
-- [ ] Champion briefed on findings
+- Results: place outputs in projects/[slug]/raw/ during the POC
 ```
 
 ## Instructions for Claude
-- Tailor checklist items to the specific products being tested
-- Set realistic but challenging success criteria based on DO benchmarks
-- Include a "day 0" runbook section covering account setup and access
-- Flag any known limitations of DO products that might affect success criteria
+- Pull success criteria and product list from qualification deliverable if it exists
+- Reference `skills/poc-templates/` and `skills/architectures/` for relevant patterns
+- Set realistic but specific success criteria — vague criteria = unwinnable POC
+- Include a "day 0" checklist covering DO account setup and access
+- After writing the file, confirm: `Saved → projects/[slug]/deliverables/poc-plan.md`
+- Remind SA: raw test output, configs, and scripts go in `projects/[slug]/raw/` (gitignored)
+- Suggest running `/capture` after the POC completes

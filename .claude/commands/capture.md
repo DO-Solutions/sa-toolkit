@@ -1,28 +1,45 @@
 # /capture — Engagement Results Capture
 
-Store engagement outcomes into the knowledge base in a structured, searchable format.
+Close out an engagement: read all deliverables from the active project, extract what's reusable, write a structured entry to the knowledge base, and prepare the PR.
 
 ## Usage
 ```
 /capture
 ```
-Run at the end of any meaningful engagement: discovery call, POC, technical validation, or competitive deal.
+Run after a POC, technical validation, or significant discovery. Claude reads the full project context and prompts for outcome.
 
-## What gets captured
+## Active engagement detection
 
-Claude will prompt for any missing fields and generate:
-1. An engagement entry in `knowledge/engagements/YYYY-MM-DD-[customer-slug].md`
-2. Any reusable patterns extracted to `skills/`
-3. A commit message suggestion
+Claude will:
+1. Check the current git branch for `customer/[slug]`
+2. Load all files from `projects/[slug]/`:
+   - `engagement.yaml`
+   - `deliverables/customer-profile.md`
+   - `deliverables/customer-qualification.md`
+   - `deliverables/cost-comparison.md`
+   - `deliverables/poc-plan.md`
+3. Ask for outcome and key results
+4. Generate the knowledge base entry
+5. Optionally extract a reusable skill
+6. Prepare the commit and PR instructions
 
-## Engagement entry template
+## Claude asks for
+
+- **Outcome**: closed-won / closed-lost / technical-validation / stalled / ongoing
+- **Key result metric**: one number that captures the outcome (e.g., "900 Mbps throughput", "42% cost savings", "POC failed on latency")
+- **What worked / what didn't**: honest debrief
+- **Reusable pattern?**: anything worth extracting to `skills/`
+
+## Output: knowledge base entry
+
+Written to: `knowledge/engagements/YYYY-MM-DD-[slug].md`
 
 ```markdown
 ---
 customer: [name or anonymized slug]
 date: YYYY-MM-DD
-sa: [your name]
-stage: discovery | technical-validation | poc | closed-won | closed-lost
+sa: [name]
+stage: [outcome]
 products: []
 outcome: [one sentence]
 tags: []
@@ -31,42 +48,44 @@ tags: []
 # Engagement: [Customer] — [Use Case]
 
 ## Context
-[What problem were they solving? Where were they coming from?]
-
 ## What we did
-[2–5 bullets: what the SA actually did]
-
 ## Results
-[Quantified outcomes: latency, cost, uptime, migration time, etc.]
-
 ## What worked
-[What patterns or approaches succeeded]
-
 ## What didn't work
-[Honest callout of issues, limitations, gotchas]
-
 ## Reusable artifacts
-- [link or filename of any skills/ entries created from this engagement]
-
 ## For the next SA who sees this customer type
-[One paragraph of distilled advice]
+```
+
+## Output: skill extraction (if applicable)
+
+Written to: `skills/[category]/[pattern-name].md`
+
+Claude will ask: *"Is there a pattern here worth generalizing?"*
+If yes, extract it and link it from the engagement entry.
+
+## Output: commit instructions
+
+After generating all files, Claude outputs:
+
+```
+Files created:
+  knowledge/engagements/YYYY-MM-DD-[slug].md
+  skills/[category]/[pattern].md  (if applicable)
+
+Update engagement.yaml stage to: [outcome]
+
+Commit:
+  git add knowledge/ skills/ projects/[slug]/engagement.yaml
+  git commit -m "capture: [slug] — [one-line outcome]"
+  git push origin customer/[slug]
+
+Then open a PR from customer/[slug] → main.
+SA lead reviews and merges. Branch deleted after merge.
 ```
 
 ## Instructions for Claude
-
-1. Parse all context from the current conversation
-2. Fill in every field you can from context — don't leave blanks you could reasonably infer
-3. Prompt for: outcome (won/lost/ongoing), key result metric, any skills worth extracting
-4. If a skill pattern is identified, create the skill file in `skills/` and link it from the engagement
-5. After generating, output:
-   ```
-   Files to create:
-   - knowledge/engagements/YYYY-MM-DD-[slug].md
-   - skills/[category]/[pattern-name].md  (if applicable)
-
-   Suggested commit:
-   git add knowledge/ skills/
-   git commit -m "capture: [customer slug] — [one-line outcome]"
-   git push
-   ```
-6. Keep the engagement entry honest. Closed-lost captures are as valuable as wins.
+- Read ALL available deliverables before prompting — pre-fill everything you can
+- Anonymize customer name if they haven't given reference permission — ask the SA
+- Closed-lost captures are as valuable as wins — don't skip them
+- Keep the "For the next SA" section tight: one paragraph, actionable advice only
+- Cross-reference `knowledge/engagements/` for similar past engagements and note if this one confirms or contradicts them

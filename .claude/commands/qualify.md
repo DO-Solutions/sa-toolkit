@@ -8,7 +8,19 @@ Score the technical fit for a DigitalOcean engagement and recommend a product mo
 ```
 Claude will prompt for required context if not already in the conversation.
 
+## Active engagement detection
+
+Claude will:
+1. Check the current git branch for `customer/[slug]`
+2. If found, load `projects/[slug]/engagement.yaml` and `projects/[slug]/deliverables/customer-profile.md` for context
+3. Write output to `projects/[slug]/deliverables/customer-qualification.md`
+4. Update `engagement.yaml`: set `fit_score`, `products`, `stage`, `last_updated`
+
+If not on a customer branch, Claude will ask which project this is for or suggest running `/engage` first.
+
 ## Required inputs
+
+Claude will ask for any missing:
 - Customer name / industry
 - Current infrastructure (cloud provider, on-prem, or hybrid)
 - Stated pain points or goals
@@ -37,6 +49,8 @@ Claude will prompt for required context if not already in the conversation.
 
 **Recommended next step**: [one concrete action]
 
+**Similar past engagements**: [search knowledge/engagements/ and list relevant matches]
+
 ## Scoring guide
 
 - **80–100**: Strong fit. Push to POC immediately.
@@ -49,3 +63,9 @@ Claude will prompt for required context if not already in the conversation.
 - **Expand**: Existing customer, new workload or product upsell
 - **Defend**: Renewal at risk, competitive threat, need to demonstrate value
 - **Pass**: Wrong scale, wrong workload, or better handled by AWS/GCP partner
+
+## Instructions for Claude
+- Search `knowledge/engagements/` for past engagements with similar profile (same industry, products, or use case) and reference them
+- After writing the file, confirm: `Saved → projects/[slug]/deliverables/customer-qualification.md`
+- Update engagement.yaml fit_score and products fields
+- Suggest running `/cost` or `/poc-init` as next steps based on score

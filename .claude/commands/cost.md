@@ -8,7 +8,19 @@ Build a cost comparison between DigitalOcean and a customer's current (or propos
 ```
 Provide current workload spec: instance types, sizes, quantities, managed services, data transfer estimates.
 
+## Active engagement detection
+
+Claude will:
+1. Check the current git branch for `customer/[slug]`
+2. If found, load `projects/[slug]/engagement.yaml` and qualification deliverable for context
+3. Write output to `projects/[slug]/deliverables/cost-comparison.md`
+4. Update `engagement.yaml`: `last_updated`
+
+If not on a customer branch, Claude will ask which project this is for.
+
 ## Required inputs
+
+Claude will ask for any missing:
 - Current provider (AWS / GCP / Azure / Hetzner / other)
 - Instance types and quantities
 - Managed databases (engine, size, HA?)
@@ -52,3 +64,5 @@ Provide current workload spec: instance types, sizes, quantities, managed servic
 - If customer doesn't know their transfer volume, use $0.05/GB as a conservative estimate for AWS and flag it
 - Round to nearest $5 for readability
 - Note if DO doesn't have a direct equivalent (e.g., some specialized services)
+- After writing the file, confirm: `Saved → projects/[slug]/deliverables/cost-comparison.md`
+- Suggest running `/poc-init` as the next step if score warrants it

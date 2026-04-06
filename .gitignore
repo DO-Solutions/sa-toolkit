@@ -19,6 +19,9 @@ credentials*
 # Claude local state
 .claude/cache/
 
+# Raw engagement work — test scripts, logs, notes, PII
+projects/*/raw/
+
 # Node (if any tooling added later)
 node_modules/
 

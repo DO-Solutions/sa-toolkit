@@ -55,21 +55,49 @@ Git branch created: `customer/acme-corp`
 
 ## Instructions for Claude
 
-1. Ask for all required inputs in a single prompt — not one at a time.
-2. Derive the slug: lowercase, spaces → hyphens, strip special chars.
-3. Use `git config user.name` to populate the `sa` field.
-4. Use today's date for `created` and `last_updated`.
-5. Run these shell commands automatically:
-   ```bash
-   mkdir -p projects/[slug]/deliverables
-   mkdir -p projects/[slug]/raw
-   # write engagement.yaml
-   git checkout -b customer/[slug]
-   git add projects/[slug]/engagement.yaml
-   git commit -m "engage: [slug] — [one-line context]"
-   git push -u origin customer/[slug]
+1. Start by asking for stage only, using a numbered selection list:
+
    ```
-6. After creating, output a summary:
+   New engagement — let's get the details.
+
+   First, what stage are we at?
+
+   1. Qualifying — early discovery, evaluating fit
+   2. POC — building or running a proof of concept
+   3. Technical Validation — validating a specific architecture or feature
+   ```
+
+2. Wait for the user to select. Once stage is confirmed, ask for the remaining four fields as a group:
+
+   ```
+   Got it — [Stage]. Now I need the specifics:
+
+   1. Customer name — e.g. "Acme Corp"
+   2. AE name — who handed this off?
+   3. One-line context — what problem are they solving?
+   4. Products in scope — best guess, e.g. DOKS, Managed Postgres, GPU Droplets
+
+   Drop all four and I'll scaffold everything.
+   ```
+
+3. Once all four are provided, scaffold the engagement:
+   - Derive the slug: lowercase, spaces → hyphens, strip special chars
+   - Use `git config user.name` to populate the `sa` field
+   - Use today's date for `created` and `last_updated`
+   - Run these shell commands automatically:
+     ```bash
+     git checkout main
+     git pull origin main
+     mkdir -p projects/[slug]/deliverables
+     mkdir -p projects/[slug]/raw
+     # write engagement.yaml
+     git checkout -b customer/[slug]
+     git add projects/[slug]/engagement.yaml
+     git commit -m "engage: [slug] — [one-line context]"
+     git push -u origin customer/[slug]
+     ```
+
+4. Confirm with a summary:
    ```
    Engagement initialized: [Customer Name]
    Branch: customer/[slug]
@@ -79,4 +107,5 @@ Git branch created: `customer/acme-corp`
    → /profile   — generate customer one-pager
    → /qualify   — score technical fit
    ```
-7. Do not run /profile or /qualify automatically — let the SA choose.
+
+5. Do not run /profile or /qualify automatically — let the SA choose.

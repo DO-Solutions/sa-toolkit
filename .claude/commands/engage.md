@@ -66,6 +66,9 @@ Git branch created: `customer/acme-corp`
 4. Use today's date for `created` and `last_updated`.
 5. Run these shell commands automatically:
    ```bash
+   # Always start from a clean main
+   git checkout main
+   git pull origin main
    mkdir -p projects/[slug]/deliverables
    mkdir -p projects/[slug]/raw
    # write engagement.yaml

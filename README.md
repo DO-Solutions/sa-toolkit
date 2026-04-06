@@ -37,18 +37,18 @@ git config --global user.email "you@digitalocean.com"
 
 ### 1. Clone the toolkit
 
+Clone it wherever you keep your projects — the path doesn't matter:
 ```bash
-mkdir -p ~/do
-git clone https://github.com/DO-Solutions/sa-toolkit.git ~/do/sa-toolkit
+git clone https://github.com/DO-Solutions/sa-toolkit.git ~/your/preferred/path/sa-toolkit
 ```
 
 ### 2. Set the `sa` alias
 
 The `sa` alias is how you open Claude inside the toolkit. It navigates to the `sa-toolkit` folder and starts Claude there — this is important because Claude needs to be running from that directory to find `CLAUDE.md` and the slash commands.
 
-Add to `~/.zshrc` or `~/.bashrc`:
+Add to `~/.zshrc` or `~/.bashrc`, pointing to wherever you cloned the repo:
 ```bash
-alias sa='cd ~/do/sa-toolkit && claude'
+alias sa='cd ~/your/preferred/path/sa-toolkit && claude'
 ```
 
 Reload:

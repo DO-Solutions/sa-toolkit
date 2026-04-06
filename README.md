@@ -48,8 +48,10 @@ The `sa` alias is how you open Claude inside the toolkit. It navigates to the `s
 
 Add to `~/.zshrc` or `~/.bashrc`, pointing to wherever you cloned the repo:
 ```bash
-alias sa='cd ~/your/preferred/path/sa-toolkit && claude'
+alias sa='cd ~/your/preferred/path/sa-toolkit && claude --dangerously-skip-permissions'
 ```
+
+The `--dangerously-skip-permissions` flag lets Claude create files, run git commands, and write deliverables without stopping to ask for approval on every action — which is the whole point of the toolkit.
 
 Reload:
 ```bash
